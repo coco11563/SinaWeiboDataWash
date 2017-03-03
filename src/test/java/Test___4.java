@@ -20,7 +20,7 @@ public class Test___4 {
         Integer[] result = new Integer[li.size()];
         li = filterNull(li);
         li.toArray(result);
-        Map<Integer, Integer> mapper = filter(li, getMax(result), getMin(result), 10);
+        Map<Integer, Integer> mapper = filter(li, getMax(result), getMin(result), 0);
         int[] temp = new int[mapper.keySet().size()];
         int i = 0;
         for (int ins : mapper.keySet()) {
@@ -35,6 +35,15 @@ public class Test___4 {
             System.out.print(mapper.get(ins) + ",");
         }
         System.out.print("]");
+        System.out.println();
+        for (int ins : temp) {
+            System.out.print("" +ins + "," + mapper.get(ins) +"\n");
+        }
+        int sum = 0;
+        for (int times : mapper.keySet()) {
+            sum += mapper.get(times);
+        }
+        System.out.println("\r\n" + sum);
     }
 
     private static int getMin(Integer[] ints) {
@@ -59,8 +68,19 @@ public class Test___4 {
     }
 
     private static Map<Integer, Integer> filter(List<Integer> list, int max, int min, int scale) {
-        List<Integer> scaleList = spliterScale(max, min, scale);
         Map<Integer, Integer> ret = new HashMap<>();
+        if (scale == 0) {
+            for (int i : list) {
+                if (!ret.containsKey(i)) {
+                    ret.put(i, 1);
+                } else {
+                    ret.put(i, ret.get(i) + 1);
+                }
+            }
+            return ret;
+        }
+        List<Integer> scaleList = spliterScale(max, min, scale);
+
         for (int i : list) {
             for (int part = 0; part < scaleList.size(); part++) {
                 if (part == 0) {
