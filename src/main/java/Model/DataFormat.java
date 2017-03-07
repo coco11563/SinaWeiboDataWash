@@ -2,6 +2,10 @@ package Model;
 
 import ch.hsr.geohash.GeoHash;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static Util.CastUtil.castDouble;
 import static Util.CastUtil.castInt;
 
@@ -186,7 +190,17 @@ public class DataFormat {
     private String removeComma(String s){
 	    return s.replace('`',' ');
     }
-
+	public static String isWinterHoliday(Date date) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if ((date.after(sdf.parse("2014-07-11")) && date.before(sdf.parse("2014-09-01")) ||
+				(date.after(sdf.parse("2015-07-10")) && date.before(sdf.parse("2015-09-09"))))){
+			return "Summer"; //shujia
+		} else if ((date.after(sdf.parse("2014-01-18")) && date.before(sdf.parse("2014-02-17")) ||
+				(date.after(sdf.parse("2015-01-26")) && date.before(sdf.parse("2015-03-01"))))) {
+			return "Winter"; //hanjia
+		}
+		return "Normal";
+	}
     public String getCoordinateHash() {
 		return GeoHash.geoHashStringWithCharacterPrecision(Double.parseDouble(lat), Double.parseDouble(lon), 8);
 	}

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static HolidayPart.ChineseHoliday.getHoliday;
+import static Model.DataFormat.isWinterHoliday;
 import static Util.CategoryUtil.categoryStatistic;
 import static Util.DatabaseHelper.queryEntityList;
 
@@ -44,6 +45,15 @@ public class CategoryCacu {
             } else {
                 flag = "0";
             }
+            if (mapper.containsKey(flag)) {
+                mapper.get(flag).add(d);
+            } else {
+                mapper.put(flag, new LinkedList<DataFormat>());
+                mapper.get(flag).add(d);
+            }
+        }
+        for (DataFormat d: list) {
+            String flag = isWinterHoliday(sdf.parse(d.getDateTime()));
             if (mapper.containsKey(flag)) {
                 mapper.get(flag).add(d);
             } else {

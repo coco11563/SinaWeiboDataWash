@@ -20,7 +20,7 @@ public class Test___4 {
         Integer[] result = new Integer[li.size()];
         li = filterNull(li);
         li.toArray(result);
-        Map<Integer, Integer> mapper = filter(li, getMax(result), getMin(result), 0);
+        Map<Integer, Integer> mapper = filter(li, getMax(result), getMin(result), 30);
         int[] temp = new int[mapper.keySet().size()];
         int i = 0;
         for (int ins : mapper.keySet()) {
